@@ -11,6 +11,7 @@ public class Stamp : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private Transform stampHead;
+    [SerializeField] private Collider stampZone;
 
     [Header("Safe Zone")]
     [SerializeField] private SplineContainer safeZoneSpline;
@@ -19,6 +20,7 @@ public class Stamp : MonoBehaviour
 
     [Header("Players")]
     [SerializeField] private Transform[] players;
+    [SerializeField] private float crushForce = 20f;
 
     private Vector3 startPosition;
     private Vector3 downPosition;
@@ -39,7 +41,7 @@ public class Stamp : MonoBehaviour
             stampHead = transform;
 
         startPosition = stampHead.localPosition;
-        downPosition = new Vector3(startPosition.x, 0f, startPosition.z); // Move down to parent's Y level
+        downPosition = Vector3.zero;
         timer = interval;
     }
 
@@ -102,12 +104,24 @@ public class Stamp : MonoBehaviour
         {
             if (player == null) continue;
 
+            if (!IsPlayerInStampZone(player.position)) continue;
+
             if (!IsPlayerSafe(player.position))
             {
+                Rigidbody playerRb = player.GetComponent<Rigidbody>();
+                if (playerRb != null)
+                {
+                    playerRb.AddForce(Vector3.up * crushForce, ForceMode.Impulse);
+                }
                 Debug.Log($"Player {player.name} was crushed by stamp!");
-                // TODO: Handle player death/damage
             }
         }
+    }
+
+    private bool IsPlayerInStampZone(Vector3 playerPosition)
+    {
+        if (stampZone == null) return true; // No zone defined, always in zone
+        return stampZone.bounds.Contains(playerPosition);
     }
 
     private bool IsPlayerSafe(Vector3 playerPosition)

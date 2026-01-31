@@ -17,46 +17,36 @@ public class PlayerSpawnManager : MonoBehaviour
 
     public void OnPlayerJoined(PlayerInput playerInput)
     {
-        GameObject newPlayer = playerInput.gameObject;
+    GameObject newPlayer = playerInput.gameObject;
 
-        // Assign color to player
-        int colorIndex = players.Count % playerColors.Length;
-        AssignPlayerColor(newPlayer, playerColors[colorIndex]);
+    // Assign color
+    int colorIndex = players.Count % playerColors.Length;
+    AssignPlayerColor(newPlayer, playerColors[colorIndex]);
 
-        // Connect previous player to this new player
-        if (players.Count > 0)
+    // If this is not the first player, connect NEW player to PREVIOUS player
+    if (players.Count > 0)
+    {
+        GameObject previousPlayer = players[players.Count - 1];
+
+        SpringJoint spring = newPlayer.GetComponent<SpringJoint>();
+        if (spring != null)
         {
-            GameObject previousPlayer = players[players.Count - 1];
-
-            // Connect spring joint
-            SpringJoint spring = previousPlayer.GetComponent<SpringJoint>();
-            if (spring != null)
-            {
-                spring.connectedBody = newPlayer.GetComponent<Rigidbody>();
-            }
-
-            // Set next player for line renderer
-            PhysicsPlayerController prevController = previousPlayer.GetComponent<PhysicsPlayerController>();
-            if (prevController != null)
-            {
-                prevController.NextPlayer = newPlayer.transform;
-            }
+            spring.connectedBody = previousPlayer.GetComponent<Rigidbody>();
         }
 
-        players.Add(newPlayer);
-
-        // Remove spring joint on the last player
-        if (players.Count == maxPlayers)
+        // Optional: still keep your line renderer chain
+        PhysicsPlayerController prevController = previousPlayer.GetComponent<PhysicsPlayerController>();
+        if (prevController != null)
         {
-            SpringJoint spring = newPlayer.GetComponent<SpringJoint>();
-            if (spring != null)
-            {
-                Destroy(spring);
-            }
+            prevController.NextPlayer = newPlayer.transform;
         }
-
-        Debug.Log($"Player {players.Count} joined and connected");
     }
+
+    players.Add(newPlayer);
+
+    Debug.Log($"Player {players.Count} joined and connected");
+}
+
 
     private void AssignPlayerColor(GameObject player, Color color)
     {

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MusicManager
   durations:
-  - 13
+  - 13.5
   - 9
   - 15
   - 6

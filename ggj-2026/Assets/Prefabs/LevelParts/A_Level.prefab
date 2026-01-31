@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5adde4020fb99f04fab84b46f3b33524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConveyerBelt
+  selfdestructTimer: 120
   alreadyExists: 0
 --- !u!1 &4212802319466856533
 GameObject:
@@ -608,6 +609,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1340200794962968308}
     m_Modifications:
+    - target: {fileID: 2044313219041680188, guid: 3781177500e02d4488c4549ea6b704d1, type: 3}
+      propertyPath: stamp
+      value: 
+      objectReference: {fileID: 4212802319466856533}
     - target: {fileID: 8445498425341456864, guid: 3781177500e02d4488c4549ea6b704d1, type: 3}
       propertyPath: m_Name
       value: CBPart (4)

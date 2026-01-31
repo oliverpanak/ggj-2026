@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Splines;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager_Y : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameManager_Y : MonoBehaviour
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private SplineAnimate splineAnimator;
     [SerializeField] private ConveyerBelt[] initialBelts;
+
+	private Queue<Vector3> stampPositions = new();
 
     private void Awake()
     {
@@ -29,8 +32,7 @@ public class GameManager_Y : MonoBehaviour
             Add(belt);
     }
 
-
-    private IEnumerator DelayedStart()
+	private IEnumerator DelayedStart()
     {
         yield return null;
         splineAnimator.enabled = true;
@@ -47,12 +49,16 @@ public class GameManager_Y : MonoBehaviour
         foreach (Transform child in belt.transform)
         {
             CBPart part = child.GetComponent<CBPart>();
-            if (part == null)
-            {
-                Debug.LogWarning("Conveyer belt has children that are not conveyer belt parts");
-            }
-            else
-                Add(part);
+			if (part == null)
+			{
+				Debug.LogWarning("Conveyer belt has children that are not conveyer belt parts");
+			}
+			else
+			{
+				Add(part);
+				if(part.stamp != null)
+					stampPositions.Enqueue(part.transform.position);
+			}
         }
     }
 }

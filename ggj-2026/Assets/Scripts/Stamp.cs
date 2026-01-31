@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -21,6 +22,8 @@ public class Stamp : MonoBehaviour
     [Header("Players")]
     [SerializeField] private Transform[] players;
     [SerializeField] private float crushForce = 20f;
+    [SerializeField] private GameObject stampColliderObject;
+    [SerializeField] private float colliderDisableTime = 0.2f;
 
     [Header("Barrier")]
     [SerializeField] private Transform barrier;
@@ -62,6 +65,9 @@ public class Stamp : MonoBehaviour
                 timer -= Time.deltaTime;
                 if (timer <= 0f)
                 {
+                    // Disable collider when stamp starts going down
+                    if (stampColliderObject != null)
+                        stampColliderObject.SetActive(false);
                     state = StampState.GoingDown;
                 }
                 break;
@@ -135,10 +141,12 @@ public class Stamp : MonoBehaviour
 
     private void OnStampDown()
     {
+        bool anyPlayerCrushed = false;
+
+        // Apply force to crushed players
         foreach (var player in players)
         {
             if (player == null) continue;
-
             if (!IsPlayerInStampZone(player.position)) continue;
 
             if (!IsPlayerSafe(player.position))
@@ -148,9 +156,28 @@ public class Stamp : MonoBehaviour
                 {
                     playerRb.AddForce(Vector3.up * crushForce, ForceMode.Impulse);
                 }
-                Debug.Log($"Player {player.name} was crushed by stamp!");
+                anyPlayerCrushed = true;
             }
         }
+
+        // Re-enable collider (with delay if someone was crushed, immediately otherwise)
+        if (stampColliderObject != null)
+        {
+            if (anyPlayerCrushed)
+            {
+                StartCoroutine(ReenableCollider());
+            }
+            else
+            {
+                stampColliderObject.SetActive(true);
+            }
+        }
+    }
+
+    private IEnumerator ReenableCollider()
+    {
+        yield return new WaitForSeconds(colliderDisableTime);
+        stampColliderObject.SetActive(true);
     }
 
     private bool IsPlayerInStampZone(Vector3 playerPosition)

@@ -158,16 +158,16 @@ SpringJoint:
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_Spring: 7
-  m_Damper: 0.2
+  m_Damper: 0
   m_MinDistance: 0
-  m_MaxDistance: 2
-  m_Tolerance: 0.1
+  m_MaxDistance: 0.7
+  m_Tolerance: 0.01
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 1
   m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
+  m_MassScale: 4
+  m_ConnectedMassScale: 4
 --- !u!120 &4329096816386422711
 LineRenderer:
   serializedVersion: 3

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7613496267397824601}
-  - component: {fileID: 3328409916844403195}
   - component: {fileID: 7310589870672783998}
   m_Layer: 0
   m_Name: Intro
@@ -35,46 +34,6 @@ Transform:
   - {fileID: 3423414548445628631}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3328409916844403195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3733227634101996590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Splines::UnityEngine.Splines.SplineContainer
-  m_Spline:
-    m_EditModeType: 1
-    m_Knots: []
-    m_MetaData: []
-    m_Closed: 0
-    m_IntData:
-      m_Data: []
-    m_FloatData:
-      m_Data: []
-    m_Float4Data:
-      m_Data: []
-    m_ObjectData:
-      m_Data: []
-  m_Splines:
-  - m_EditModeType: 1
-    m_Knots: []
-    m_MetaData: []
-    m_Closed: 0
-    m_IntData:
-      m_Data: []
-    m_FloatData:
-      m_Data: []
-    m_Float4Data:
-      m_Data: []
-    m_ObjectData:
-      m_Data: []
-  m_Knots:
-    m_KnotsLink: []
 --- !u!114 &7310589870672783998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5adde4020fb99f04fab84b46f3b33524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConveyerBelt
-  splineContainer: {fileID: 0}
+  alreadyExists: 0
 --- !u!1001 &1446885226034498595
 PrefabInstance:
   m_ObjectHideFlags: 0

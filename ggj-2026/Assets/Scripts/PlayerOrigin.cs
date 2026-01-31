@@ -4,5 +4,5 @@ using UnityEngine.Splines;
 
 public class PlayerOrigin : MonoBehaviour
 {
-    [SerializeField] SplineAnimate animator;
+    
 }

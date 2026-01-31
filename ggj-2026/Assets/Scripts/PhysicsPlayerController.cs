@@ -8,6 +8,8 @@ public class PhysicsPlayerController : MonoBehaviour
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private Transform nextPlayer;
 
+    [SerializeField] private Animator animatorController;
+
     public Transform NextPlayer
     {
         get => nextPlayer;
@@ -18,7 +20,10 @@ public class PhysicsPlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (inputDirection.sqrMagnitude > 0.01f)
+        bool walking = inputDirection.sqrMagnitude > 0.01f;
+        animatorController.SetBool("Walking", walking);
+
+        if (walking)
         {
             rb.AddForce(inputDirection * moveForce, ForceMode.Force);
         }
@@ -40,6 +45,7 @@ public class PhysicsPlayerController : MonoBehaviour
 
     public void OnMove(InputValue value)
     {
+
         Vector2 input = value.Get<Vector2>();
         inputDirection = new Vector3(input.x, 0, input.y);
     }

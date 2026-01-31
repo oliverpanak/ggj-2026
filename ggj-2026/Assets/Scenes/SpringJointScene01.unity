@@ -287,9 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawnManager
   connectInLoop: 0
-  playerPrefab: {fileID: 1534500882681460173, guid: 1ee0827cbee8c49d5a885bd9be10551b, type: 3}
-  spawnPoints: []
-  playerCount: 2
+  maxPlayers: 4
 --- !u!114 &517044714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,7 +295,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 517044712}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
   m_Name: 

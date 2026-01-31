@@ -126,7 +126,7 @@ Rigidbody:
   m_GameObject: {fileID: 1534500882681460173}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 1
   m_AngularDamping: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -160,7 +160,7 @@ SpringJoint:
   m_Spring: 7
   m_Damper: 0
   m_MinDistance: 0
-  m_MaxDistance: 0.7
+  m_MaxDistance: 0.8
   m_Tolerance: 0.05
   m_BreakForce: Infinity
   m_BreakTorque: Infinity

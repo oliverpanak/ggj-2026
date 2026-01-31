@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -20,7 +21,6 @@ public class Stamp : MonoBehaviour
     [SerializeField] private int splineSamplePoints = 20;
 
     [Header("Players")]
-    [SerializeField] private Transform[] players;
     [SerializeField] private float crushForce = 20f;
     [SerializeField] private GameObject stampColliderObject;
     [SerializeField] private float colliderDisableTime = 0.2f;
@@ -35,6 +35,8 @@ public class Stamp : MonoBehaviour
     private float timer;
     private StampState state = StampState.Waiting;
     private bool barrierLifted;
+
+    private IReadOnlyList<Transform> Players => GameManager.Instance?.Players;
 
     private enum StampState
     {
@@ -130,7 +132,9 @@ public class Stamp : MonoBehaviour
 
     private bool AreAllPlayersInZone()
     {
-        foreach (var player in players)
+        if (Players == null) return false;
+
+        foreach (var player in Players)
         {
             if (player == null) continue;
             if (!IsPlayerInStampZone(player.position))
@@ -143,8 +147,10 @@ public class Stamp : MonoBehaviour
     {
         bool anyPlayerCrushed = false;
 
+        if (Players == null) return;
+
         // Apply force to crushed players
-        foreach (var player in players)
+        foreach (var player in Players)
         {
             if (player == null) continue;
             if (!IsPlayerInStampZone(player.position)) continue;

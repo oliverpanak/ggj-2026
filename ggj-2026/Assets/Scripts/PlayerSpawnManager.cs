@@ -4,36 +4,37 @@ using UnityEngine.InputSystem;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
-    [Header("Spring Joints")]
-    [SerializeField] private float springStrength = 50f;
-    [SerializeField] private float springDamper = 5f;
-    [SerializeField] private float maxDistance = 2f;
+    [SerializeField] private int maxPlayers = 4;
 
-    private List<Rigidbody> playerRigidbodies = new List<Rigidbody>();
+    private List<GameObject> players = new List<GameObject>();
 
     public void OnPlayerJoined(PlayerInput playerInput)
     {
-        Rigidbody newPlayerRb = playerInput.GetComponent<Rigidbody>();
-        if (newPlayerRb == null)
-        {
-            Debug.LogError("Spawned player has no Rigidbody!");
-            return;
-        }
+        GameObject newPlayer = playerInput.gameObject;
 
         // Connect previous player's spring joint to this new player
-        if (playerRigidbodies.Count > 0)
+        if (players.Count > 0)
         {
-            Rigidbody previousPlayer = playerRigidbodies[playerRigidbodies.Count - 1];
-            SpringJoint spring = previousPlayer.gameObject.AddComponent<SpringJoint>();
-            spring.spring = springStrength;
-            spring.damper = springDamper;
-            spring.minDistance = 0f;
-            spring.maxDistance = maxDistance;
-            spring.autoConfigureConnectedAnchor = true;
-            spring.connectedBody = newPlayerRb;
+            GameObject previousPlayer = players[players.Count - 1];
+            SpringJoint spring = previousPlayer.GetComponent<SpringJoint>();
+            if (spring != null)
+            {
+                spring.connectedBody = newPlayer.GetComponent<Rigidbody>();
+            }
         }
 
-        playerRigidbodies.Add(newPlayerRb);
-        Debug.Log($"Player {playerRigidbodies.Count} joined and connected");
+        players.Add(newPlayer);
+
+        // Remove spring joint on the last player
+        if (players.Count == maxPlayers)
+        {
+            SpringJoint spring = newPlayer.GetComponent<SpringJoint>();
+            if (spring != null)
+            {
+                Destroy(spring);
+            }
+        }
+
+        Debug.Log($"Player {players.Count} joined and connected");
     }
 }

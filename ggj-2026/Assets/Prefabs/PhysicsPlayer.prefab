@@ -34,8 +34,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -158,16 +158,16 @@ SpringJoint:
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_Spring: 7
-  m_Damper: 0.2
+  m_Damper: 0
   m_MinDistance: 0
-  m_MaxDistance: 2
-  m_Tolerance: 0.1
+  m_MaxDistance: 0.7
+  m_Tolerance: 0.01
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 1
   m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
+  m_MassScale: 4
+  m_ConnectedMassScale: 4
 --- !u!120 &4329096816386422711
 LineRenderer:
   serializedVersion: 3

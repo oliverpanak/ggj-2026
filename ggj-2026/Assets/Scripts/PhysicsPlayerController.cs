@@ -5,6 +5,14 @@ public class PhysicsPlayerController : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float moveForce = 10f;
+    [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private Transform nextPlayer;
+
+    public Transform NextPlayer
+    {
+        get => nextPlayer;
+        set => nextPlayer = value;
+    }
 
     private Vector3 inputDirection;
 
@@ -13,6 +21,20 @@ public class PhysicsPlayerController : MonoBehaviour
         if (inputDirection.sqrMagnitude > 0.01f)
         {
             rb.AddForce(inputDirection * moveForce, ForceMode.Force);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (lineRenderer != null && NextPlayer != null)
+        {
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, NextPlayer.position);
+        }
+        else if (lineRenderer != null)
+        {
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, transform.position);
         }
     }
 

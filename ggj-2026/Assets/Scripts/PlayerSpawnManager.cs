@@ -12,14 +12,23 @@ public class PlayerSpawnManager : MonoBehaviour
     {
         GameObject newPlayer = playerInput.gameObject;
 
-        // Connect previous player's spring joint to this new player
+        // Connect previous player to this new player
         if (players.Count > 0)
         {
             GameObject previousPlayer = players[players.Count - 1];
+
+            // Connect spring joint
             SpringJoint spring = previousPlayer.GetComponent<SpringJoint>();
             if (spring != null)
             {
                 spring.connectedBody = newPlayer.GetComponent<Rigidbody>();
+            }
+
+            // Set next player for line renderer
+            PhysicsPlayerController prevController = previousPlayer.GetComponent<PhysicsPlayerController>();
+            if (prevController != null)
+            {
+                prevController.NextPlayer = newPlayer.transform;
             }
         }
 

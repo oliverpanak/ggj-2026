@@ -23,7 +23,7 @@ public class ConveyerBelt : MonoBehaviour
 	
 	public void Add(CBPart part)
 	{
-		splineContainer.Spline.Add(part.transform.position);
+		splineContainer.Spline.Add(part.transform.localPosition);
 	}
 
 	private void InitialiseSpline()

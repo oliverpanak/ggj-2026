@@ -22,10 +22,16 @@ public class Stamp : MonoBehaviour
     [SerializeField] private Transform[] players;
     [SerializeField] private float crushForce = 20f;
 
+    [Header("Barrier")]
+    [SerializeField] private Transform barrier;
+    [SerializeField] private Transform barrierLiftTarget;
+
     private Vector3 startPosition;
     private Vector3 downPosition;
+    private Vector3 barrierStartPosition;
     private float timer;
     private StampState state = StampState.Waiting;
+    private bool barrierLifted;
 
     private enum StampState
     {
@@ -43,6 +49,9 @@ public class Stamp : MonoBehaviour
         startPosition = stampHead.localPosition;
         downPosition = Vector3.zero;
         timer = interval;
+
+        if (barrier != null)
+            barrierStartPosition = barrier.position;
     }
 
     private void Update()
@@ -77,6 +86,11 @@ public class Stamp : MonoBehaviour
                 timer -= Time.deltaTime;
                 if (timer <= 0f)
                 {
+                    // Check if barrier should lift when stamp starts going up
+                    if (!barrierLifted && AreAllPlayersInZone())
+                    {
+                        barrierLifted = true;
+                    }
                     state = StampState.GoingUp;
                 }
                 break;
@@ -88,6 +102,16 @@ public class Stamp : MonoBehaviour
                     upSpeed * Time.deltaTime
                 );
 
+                // Lift barrier at same time and speed as stamp
+                if (barrierLifted && barrier != null && barrierLiftTarget != null)
+                {
+                    barrier.position = Vector3.MoveTowards(
+                        barrier.position,
+                        barrierLiftTarget.position,
+                        upSpeed * Time.deltaTime
+                    );
+                }
+
                 if (Vector3.Distance(stampHead.localPosition, startPosition) < 0.01f)
                 {
                     stampHead.localPosition = startPosition;
@@ -96,6 +120,17 @@ public class Stamp : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    private bool AreAllPlayersInZone()
+    {
+        foreach (var player in players)
+        {
+            if (player == null) continue;
+            if (!IsPlayerInStampZone(player.position))
+                return false;
+        }
+        return true;
     }
 
     private void OnStampDown()

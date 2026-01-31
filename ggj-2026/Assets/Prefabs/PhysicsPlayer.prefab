@@ -161,7 +161,7 @@ SpringJoint:
   m_Damper: 0
   m_MinDistance: 0
   m_MaxDistance: 0.7
-  m_Tolerance: 0.01
+  m_Tolerance: 0.05
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 1

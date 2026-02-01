@@ -51,6 +51,7 @@ MonoBehaviour:
   - 18
   - 6
   eventEmitter: {fileID: 2857560375118937617}
+  firstSection: 0
 --- !u!114 &2857560375118937617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,7 +74,7 @@ MonoBehaviour:
     Path: event:/TestEvent
   Event: 
   EventPlayTrigger: 1
-  EventStopTrigger: 0
+  EventStopTrigger: 2
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0

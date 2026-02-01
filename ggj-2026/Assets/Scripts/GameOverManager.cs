@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameOverManager : MonoBehaviour
@@ -8,11 +9,13 @@ public class GameOverManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject pausePanel;
 
     [Header("Timing")]
     [SerializeField] private float delayBeforePause = 0.3f;
 
     private bool isGameOver;
+    private bool isPaused;
 
     private void Awake()
     {
@@ -29,6 +32,42 @@ public class GameOverManager : MonoBehaviour
     {
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame && !isGameOver)
+        {
+            TogglePause();
+        }
+    }
+
+    public void TogglePause()
+    {
+        if (isPaused)
+            ResumeGame();
+        else
+            PauseGame();
+    }
+
+    public void PauseGame()
+    {
+        if (isGameOver) return;
+
+        isPaused = true;
+        Time.timeScale = 0f;
+        if (pausePanel != null)
+            pausePanel.SetActive(true);
+    }
+
+    public void ResumeGame()
+    {
+        isPaused = false;
+        Time.timeScale = 1f;
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
     }
 
     public void TriggerGameOver()

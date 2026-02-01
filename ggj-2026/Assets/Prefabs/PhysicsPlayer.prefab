@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PhysicsPlayerController
   rb: {fileID: 157568721544768123}
-  moveForce: 10
+  moveForce: 15
   lineRenderer: {fileID: 4329096816386422711}
   nextPlayer: {fileID: 0}
   animatorController: {fileID: 8078683394009400236}

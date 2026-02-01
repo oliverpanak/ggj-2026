@@ -637,6 +637,11 @@ MonoBehaviour:
   initialBelts:
   - {fileID: 7106881064486267328}
   - {fileID: 2011763295}
+  sections:
+  - {fileID: 2214865817236503108, guid: 55c06328f16fb4f42a5c32259d771e93, type: 3}
+  - {fileID: 885529405312165278, guid: 96c8bbfb6be53fc4a97ce8f96416e481, type: 3}
+  - {fileID: 6480368465376728363, guid: 2fb1baee84bc8414385405615f19fab2, type: 3}
+  - {fileID: 5854157562925128926, guid: 0204c5192dddcfd45801522cd90723ef, type: 3}
 --- !u!4 &2126559947
 Transform:
   m_ObjectHideFlags: 0

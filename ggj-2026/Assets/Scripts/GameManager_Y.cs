@@ -18,12 +18,15 @@ public class GameManager_Y : MonoBehaviour
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private SplineAnimate splineAnimator;
     [SerializeField] private ConveyerBelt[] initialBelts;
+    [SerializeField, Tooltip("Please put them in order xox")] private GameObject[] sections;
 
     private Queue<StampTime> stampTimes = new();
     private double timer = 0;
-    private double nextTimeStep; //Each conveyer part == 1.5 s, each stamp is 3 s
+    private double nextTimeStep;
     private static double s_conveyerTime = 1.5;
     private static double s_stampTime = 3;
+    private double nextSpawnPosition;
+    private static double s_conveyerSize = 2;
     public event Action onCameraStop;
     public event Action onStamp;
     public event Action onCameraGo;
@@ -47,6 +50,7 @@ public class GameManager_Y : MonoBehaviour
         onCameraStop += () => { Debug.Log($"STOP: {Time.timeSinceLevelLoadAsDouble}"); splineAnimator.Pause(); };
         onStamp += () => { Debug.Log($"STAMP: {Time.timeSinceLevelLoadAsDouble}"); };
         onCameraGo += () => { Debug.Log($"GO: {Time.timeSinceLevelLoadAsDouble}"); splineAnimator.Play(); };
+        MusicManager.Instance.onDecideNextSection += SpawnNextSection;
     }
 
     void Update()
@@ -97,6 +101,7 @@ public class GameManager_Y : MonoBehaviour
                 }
 
                 nextTimeStep += s_conveyerTime;
+                nextSpawnPosition += s_conveyerSize;
                 if (part.stamp != null) nextTimeStep += s_stampTime;
             }
         }
@@ -110,5 +115,12 @@ public class GameManager_Y : MonoBehaviour
         time.cameraStop = stampTime - 0.5 * s_stampTime;
         time.cameraGo = stampTime + 0.5 * s_stampTime;
         stampTimes.Enqueue(time);
+    }
+
+    private void SpawnNextSection(int sectionIndex)
+    {
+        GameObject prefab = sections[sectionIndex];
+        Vector3 position = new Vector3((float)nextSpawnPosition, 0, 0);
+        Instantiate(prefab, position, Quaternion.identity);
     }
 }

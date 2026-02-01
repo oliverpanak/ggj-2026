@@ -1,16 +1,28 @@
 using System.Collections;
 using UnityEngine;
 using FMODUnity;
+using System;
 
 public class MusicManager : MonoBehaviour
 {
+    public static MusicManager Instance { get; private set; }
     [SerializeField] private float[] durations;
     [SerializeField] private StudioEventEmitter eventEmitter;
 
     private float time; //Contains the remaint from the last music snippet
 
     private float timer = 0f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    //Input is the section that has been chosen. 0 == A, 1 == B, etc.
+    public event Action<int> onDecideNextSection;
+
+    private void Awake()
+    {
+        if (Instance != null)
+            Debug.LogError("Too many MusicManagers in the scene");
+        Instance = this;
+    }
+
     void Start()
     {
         StartCoroutine(StartDelayed(1));
@@ -25,20 +37,21 @@ public class MusicManager : MonoBehaviour
         //Wait 1 second more
         yield return Wait(delay);
 
-        int index = Random.Range(0, durations.Length);
+        int index = UnityEngine.Random.Range(0, durations.Length);
         StartCoroutine(SetAudio(index));
     }
 
     private IEnumerator SetAudio(int index)
     {
-        var result = eventEmitter.EventInstance.setParameterByName("Sections", (float)(index + 1));
+        var result = eventEmitter.EventInstance.setParameterByName("Sections", (index + 1));
 
         float time1 = timer;
         yield return Wait(durations[index]);
         float time2 = timer;
         Debug.LogWarning($"{index} took {time2 - time1}");
 
-        index = Random.Range(0, durations.Length);
+        index = UnityEngine.Random.Range(0, durations.Length);
+        onDecideNextSection?.Invoke(index);
         StartCoroutine(SetAudio(index));
     }
 

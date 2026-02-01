@@ -47,9 +47,9 @@ public class GameManager_Y : MonoBehaviour
         foreach (ConveyerBelt belt in initialBelts)
             Add(belt);
 
-        onCameraStop += () => { Debug.Log($"STOP: {Time.timeSinceLevelLoadAsDouble}"); splineAnimator.Pause(); };
-        onStamp += () => { Debug.Log($"STAMP: {Time.timeSinceLevelLoadAsDouble}"); };
-        onCameraGo += () => { Debug.Log($"GO: {Time.timeSinceLevelLoadAsDouble}"); splineAnimator.Play(); };
+        onCameraStop += () => { splineAnimator.Pause(); };
+        onStamp += () => {};
+        onCameraGo += () => { splineAnimator.Play(); };
         MusicManager.Instance.onDecideNextSection += SpawnNextSection;
     }
 
@@ -97,23 +97,32 @@ public class GameManager_Y : MonoBehaviour
                 Add(part);
                 if (part.stamp != null)
                 {
-                    AddToQueue(nextTimeStep + 1.5);
+                    AddToQueue(belt.type == "C" ? nextTimeStep + 0.75 : nextTimeStep + 1.5, belt.type == "C");
                 }
 
                 nextTimeStep += s_conveyerTime;
                 nextSpawnPosition += s_conveyerSize;
-                if (part.stamp != null) nextTimeStep += s_stampTime;
+                if (part.stamp != null) nextTimeStep += belt.type == "C" ? s_stampTime * 0.5 : s_stampTime;
             }
         }
     }
 
-    private void AddToQueue(double stampTime)
+    private void AddToQueue(double stampTime, bool halfTime = false)
     {
         StampTime time = new();
         //Hier weitermachen
-        time.stamp = stampTime;
-        time.cameraStop = stampTime - 0.5 * s_stampTime;
-        time.cameraGo = stampTime + 0.5 * s_stampTime;
+        if (halfTime)
+        {
+            time.cameraStop = stampTime - 0.25 * s_stampTime;
+            time.stamp = stampTime;
+            time.cameraGo = stampTime + 0.25 * s_stampTime;
+        }
+        else
+        {
+            time.cameraStop = stampTime - 0.5 * s_stampTime;
+            time.stamp = stampTime;
+            time.cameraGo = stampTime + 0.5 * s_stampTime;
+        }
         stampTimes.Enqueue(time);
     }
 

@@ -89,7 +89,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5adde4020fb99f04fab84b46f3b33524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConveyerBelt
-  splineContainer: {fileID: 0}
+  selfdestructTimer: 120
+  type: D
+  alreadyExists: 0
 --- !u!1001 &4601788333011252583
 PrefabInstance:
   m_ObjectHideFlags: 0

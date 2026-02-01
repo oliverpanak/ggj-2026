@@ -15,6 +15,7 @@ public class MusicManager : MonoBehaviour
 
     //Input is the section that has been chosen. 0 == A, 1 == B, etc.
     public event Action<int> onDecideNextSection;
+    [SerializeField] private int firstSection;
 
     private void Awake()
     {
@@ -25,34 +26,36 @@ public class MusicManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(StartDelayed(1));
+        StartCoroutine(StartDelayed(0.2f));
+        eventEmitter.EventInstance.setParameterByName("Sections", firstSection + 1);
     }
 
     private IEnumerator StartDelayed(float delay)
     {
-        eventEmitter.EventInstance.setParameterByName("Sections", 1f);
 
         //Wait until the intro is over. Because the first section will always be 1f
         yield return Wait(3f);
-        //Wait 1 second more
+        //Wait for the delay
         yield return Wait(delay);
 
         int index = UnityEngine.Random.Range(0, durations.Length);
-        StartCoroutine(SetAudio(index));
+        StartCoroutine(SetAudio(index, durations[firstSection]));
     }
 
-    private IEnumerator SetAudio(int index)
+    private IEnumerator SetAudio(int index, float delay)
     {
-        var result = eventEmitter.EventInstance.setParameterByName("Sections", (index + 1));
+        var result = eventEmitter.EventInstance.setParameterByName("Sections", index + 1);
+        onDecideNextSection?.Invoke(index);
+        Debug.Log($"Spawned next at {timer} s");
 
         float time1 = timer;
-        yield return Wait(durations[index]);
+        yield return Wait(delay);
         float time2 = timer;
         Debug.LogWarning($"{index} took {time2 - time1}");
 
+        float nextDelay = durations[index];
         index = UnityEngine.Random.Range(0, durations.Length);
-        onDecideNextSection?.Invoke(index);
-        StartCoroutine(SetAudio(index));
+        StartCoroutine(SetAudio(index, nextDelay));
     }
 
     private IEnumerator Wait(float time)

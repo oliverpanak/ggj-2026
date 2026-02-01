@@ -266,7 +266,7 @@ Transform:
   - {fileID: 53111947942833715}
   - {fileID: 514004009894971721}
   - {fileID: 388397230126418307}
-  - {fileID: 2498980646346053890}
+  - {fileID: 5891105358467203171}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &933413450719948590
@@ -322,6 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConveyerBelt
   selfdestructTimer: 120
+  type: C
   alreadyExists: 0
 --- !u!1 &7024434324892846964
 GameObject:
@@ -559,7 +560,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9179458943831583170, guid: 3781177500e02d4488c4549ea6b704d1, type: 3}
   m_PrefabInstance: {fileID: 1972776235732891329}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &6759292734811762880
+--- !u!1001 &3360411387188455841
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -616,10 +617,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3781177500e02d4488c4549ea6b704d1, type: 3}
---- !u!4 &2498980646346053890 stripped
+--- !u!4 &5891105358467203171 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9179458943831583170, guid: 3781177500e02d4488c4549ea6b704d1, type: 3}
-  m_PrefabInstance: {fileID: 6759292734811762880}
+  m_PrefabInstance: {fileID: 3360411387188455841}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7061941958515649204
 PrefabInstance:

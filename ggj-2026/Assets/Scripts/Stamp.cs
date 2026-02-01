@@ -6,7 +6,6 @@ using UnityEngine.Splines;
 public class Stamp : MonoBehaviour
 {
     [Header("Timing")]
-    [SerializeField] private float interval = 3f;
     [SerializeField] private float downSpeed = 5f;
     [SerializeField] private float upSpeed = 2f;
     [SerializeField] private float stayDownDuration = 1f;
@@ -36,7 +35,7 @@ public class Stamp : MonoBehaviour
     private StampState state = StampState.Waiting;
     private bool barrierLifted;
 
-    private IReadOnlyList<Transform> Players => GameManager.Instance?.Players;
+    private IReadOnlyList<Transform> Players => PlayerManager.Instance?.Players;
 
     private enum StampState
     {
@@ -53,10 +52,35 @@ public class Stamp : MonoBehaviour
 
         startPosition = stampHead.localPosition;
         downPosition = Vector3.zero;
-        timer = interval;
 
         if (barrier != null)
             barrierStartPosition = barrier.position;
+
+        // Subscribe to GameManager_Y's stamp event
+        if (GameManager_Y.Instance != null)
+        {
+            GameManager_Y.Instance.onStamp += OnStampTriggered;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // Unsubscribe to avoid memory leaks
+        if (GameManager_Y.Instance != null)
+        {
+            GameManager_Y.Instance.onStamp -= OnStampTriggered;
+        }
+    }
+
+    private void OnStampTriggered()
+    {
+        // Only trigger if we're in waiting state
+        if (state == StampState.Waiting)
+        {
+            if (stampColliderObject != null)
+                stampColliderObject.SetActive(false);
+            state = StampState.GoingDown;
+        }
     }
 
     private void Update()
@@ -64,14 +88,7 @@ public class Stamp : MonoBehaviour
         switch (state)
         {
             case StampState.Waiting:
-                timer -= Time.deltaTime;
-                if (timer <= 0f)
-                {
-                    // Disable collider when stamp starts going down
-                    if (stampColliderObject != null)
-                        stampColliderObject.SetActive(false);
-                    state = StampState.GoingDown;
-                }
+                // Stamp is triggered by GameManager_Y.onStamp event
                 break;
 
             case StampState.GoingDown:
@@ -123,7 +140,6 @@ public class Stamp : MonoBehaviour
                 if (Vector3.Distance(stampHead.localPosition, startPosition) < 0.01f)
                 {
                     stampHead.localPosition = startPosition;
-                    timer = interval;
                     state = StampState.Waiting;
                 }
                 break;

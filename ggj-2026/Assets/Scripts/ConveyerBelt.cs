@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -5,35 +6,18 @@ using UnityEngine.Splines;
 
 public class ConveyerBelt : MonoBehaviour
 {
-	public static ConveyerBelt Instance {get; private set;}
-	
-	[SerializeField] SplineContainer splineContainer;
+	[SerializeField] private float selfdestructTimer = 120;
 
-	void Awake()
-	{
-		if (Instance != null)
-			Debug.LogError("Too many ConveyerBelts in the scene");
-		Instance = this;
-	}
-	
+	[SerializeField] private bool alreadyExists = false;
 	void Start()
 	{
-		InitialiseSpline();
-	}
-	
-	public void Add(CBPart part)
-	{
-		splineContainer.Spline.Add(part.transform.localPosition);
+		if(!alreadyExists)
+			GameManager_Y.Instance.Add(this);
 	}
 
-	private void InitialiseSpline()
+	private IEnumerator SelfDestruct()
 	{
-		foreach(Transform child in transform)
-		{
-			CBPart part = child.GetComponent<CBPart>();
-			if (part == null)
-				Debug.LogWarning("Conveyer belt has children that are not conveyer belt parts");
-			Add(part);
-		}
-    }
+		yield return new WaitForSeconds(selfdestructTimer);
+		Destroy(gameObject);
+	}
 }

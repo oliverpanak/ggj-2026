@@ -13,6 +13,16 @@ public class PlayerSpawnManager : MonoBehaviour
 
     public void OnPlayerJoined(PlayerInput playerInput)
     {
+        // Reject mouse/keyboard players
+        foreach (var device in playerInput.devices)
+        {
+            if (device is Mouse || device is Keyboard)
+            {
+                Destroy(playerInput.gameObject);
+                return;
+            }
+        }
+
         GameObject newPlayer = playerInput.gameObject;
         if(spawnPosition != null)
             playerInput.transform.position = spawnPosition.position;

@@ -47,9 +47,9 @@ public class GameManager_Y : MonoBehaviour
         foreach (ConveyerBelt belt in initialBelts)
             Add(belt);
 
-        onCameraStop += () => { Debug.Log($"STOP: {Time.timeSinceLevelLoadAsDouble}"); splineAnimator.Pause(); };
-        onStamp += () => { Debug.Log($"STAMP: {Time.timeSinceLevelLoadAsDouble}"); };
-        onCameraGo += () => { Debug.Log($"GO: {Time.timeSinceLevelLoadAsDouble}"); splineAnimator.Play(); };
+        onCameraStop += () => { splineAnimator.Pause(); };
+        onStamp += () => {};
+        onCameraGo += () => { splineAnimator.Play(); };
         MusicManager.Instance.onDecideNextSection += SpawnNextSection;
     }
 

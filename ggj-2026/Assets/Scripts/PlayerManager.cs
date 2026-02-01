@@ -16,6 +16,7 @@ public class PlayerManager : MonoBehaviour
     private List<Transform> runtimePlayers = new List<Transform>();
 
     public IReadOnlyList<Transform> Players => manualPlayers.Count > 0 ? manualPlayers : runtimePlayers;
+    public bool IsManualSetup => manualPlayers.Count > 0;
 
     private void Awake()
     {

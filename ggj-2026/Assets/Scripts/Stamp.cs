@@ -35,7 +35,7 @@ public class Stamp : MonoBehaviour
     private StampState state = StampState.Waiting;
     private bool barrierLifted;
 
-    private IReadOnlyList<Transform> Players => GameManager.Instance?.Players;
+    private IReadOnlyList<Transform> Players => PlayerManager.Instance?.Players;
 
     private enum StampState
     {

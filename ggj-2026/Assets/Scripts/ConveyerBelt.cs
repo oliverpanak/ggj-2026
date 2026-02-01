@@ -8,6 +8,8 @@ public class ConveyerBelt : MonoBehaviour
 {
 	[SerializeField] private float selfdestructTimer = 120;
 
+	public string type;
+
 	[SerializeField] private bool alreadyExists = false;
 	void Start()
 	{

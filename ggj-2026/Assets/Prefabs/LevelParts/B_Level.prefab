@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConveyerBelt
   selfdestructTimer: 120
+  type: B
   alreadyExists: 0
 --- !u!1 &6778478850766788994
 GameObject:

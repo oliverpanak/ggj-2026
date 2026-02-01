@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{c387cbb1-cda9-4287-99fe-0e3d02eb8974}">
+		<property name="assetPath">
+			<value>Music/Pressure_D-Break.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>7</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{1b7fc2de-3887-44a1-9982-9da537c0f744}</destination>
+		</relationship>
+	</object>
+</objects>

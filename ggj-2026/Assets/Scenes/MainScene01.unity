@@ -654,10 +654,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpawnManager
   maxPlayers: 4
   playerColors:
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0, b: 1, a: 1}
-  - {r: 0, g: 1, b: 0, a: 1}
-  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - {fileID: 2100000, guid: 19d94c91b789945a49d256a4d4f8c918, type: 2}
+  - {fileID: 2100000, guid: efc284b46455d4f78a6e7fc0844174c4, type: 2}
+  - {fileID: 2100000, guid: 0baac81c15201ea49addb2445922fbec, type: 2}
+  - {fileID: 2100000, guid: e5ebb3c0f30179445a18b3fb36d6f5d5, type: 2}
 --- !u!114 &1088590077
 MonoBehaviour:
   m_ObjectHideFlags: 0

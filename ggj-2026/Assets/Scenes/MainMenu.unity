@@ -1898,6 +1898,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: e5ebb3c0f30179445a18b3fb36d6f5d5, type: 2}
   isManualSetup: 0
   spawnPosition: {fileID: 538353745}
+  springRestDistance: 0.5
 --- !u!114 &1757317856
 MonoBehaviour:
   m_ObjectHideFlags: 0

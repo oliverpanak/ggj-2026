@@ -8,6 +8,7 @@ public class PlayerSpawnManager : MonoBehaviour
     [SerializeField] private Material[] playerColors = new Material[4];
     [SerializeField] private bool isManualSetup;
     [SerializeField] private Transform spawnPosition;
+    [SerializeField] private float springRestDistance = 2f;
 
     private List<GameObject> players = new List<GameObject>();
 
@@ -52,7 +53,13 @@ public class PlayerSpawnManager : MonoBehaviour
 
                 if (spring != null)
                 {
+                    // Reset spring joint to use consistent rest distance
+                    spring.autoConfigureConnectedAnchor = false;
                     spring.connectedBody = previousPlayer.GetComponent<Rigidbody>();
+                    spring.anchor = Vector3.zero;
+                    spring.connectedAnchor = Vector3.zero;
+                    spring.minDistance = 0f;
+                    spring.maxDistance = springRestDistance;
                 }
 
                 // Optional: still keep your line renderer chain

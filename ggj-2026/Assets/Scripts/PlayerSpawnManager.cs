@@ -16,6 +16,7 @@ public class PlayerSpawnManager : MonoBehaviour
         GameObject newPlayer = playerInput.gameObject;
         if(spawnPosition != null)
             playerInput.transform.position = spawnPosition.position;
+        DontDestroyOnLoad(playerInput.gameObject);
 
         // Assign color
         int colorIndex = players.Count % playerColors.Length;

@@ -5,6 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private string gameSceneName = "MainScene01";
     [SerializeField] private string manualTestingSceneName = "MainScene01_ManualTesting";
+    public GameObject[] players;
 
     public void StartGame()
     {

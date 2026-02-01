@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5052607028291108184}
   - component: {fileID: 2665776449349837667}
   m_Layer: 0
-  m_Name: PhysicsPlayer
+  m_Name: Player_Controller
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

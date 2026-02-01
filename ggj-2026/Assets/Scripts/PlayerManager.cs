@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,16 +6,9 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
 
-    // [Header("Camera")]
-    // [SerializeField] private CinemachineCamera cinemachineCamera;
+    private List<Transform> players = new List<Transform>();
 
-    [Header("Manual Testing")]
-    [SerializeField] private List<Transform> manualPlayers = new List<Transform>();
-
-    private List<Transform> runtimePlayers = new List<Transform>();
-
-    public IReadOnlyList<Transform> Players => manualPlayers.Count > 0 ? manualPlayers : runtimePlayers;
-    public bool IsManualSetup => manualPlayers.Count > 0;
+    public IReadOnlyList<Transform> Players => players;
 
     private void Awake()
     {
@@ -28,33 +20,16 @@ public class PlayerManager : MonoBehaviour
         Instance = this;
     }
 
-    // private void Start()
-    // {
-    //     // Set camera target to first manual player if available
-    //     if (manualPlayers.Count > 0 && cinemachineCamera != null)
-    //     {
-    //         cinemachineCamera.Follow = manualPlayers[0];
-    //     }
-    // }
-
-    // Called by PlayerInputManager when a player joins
     public void OnPlayerJoined(PlayerInput playerInput)
     {
         Transform playerTransform = playerInput.transform;
-        runtimePlayers.Add(playerTransform);
-
-        // // Set camera target to first player
-        // if (runtimePlayers.Count == 1 && cinemachineCamera != null)
-        // {
-        //     cinemachineCamera.Follow = playerTransform;
-        // }
-
-        Debug.Log($"GameManager: Player {runtimePlayers.Count} joined");
+        players.Add(playerTransform);
+        Debug.Log($"PlayerManager: Player {players.Count} joined");
     }
 
     public void OnPlayerLeft(PlayerInput playerInput)
     {
-        runtimePlayers.Remove(playerInput.transform);
-        Debug.Log($"GameManager: Player left, {runtimePlayers.Count} remaining");
+        players.Remove(playerInput.transform);
+        Debug.Log($"PlayerManager: Player left, {players.Count} remaining");
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PhysicsPlayerController : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class PhysicsPlayerController : MonoBehaviour
     }
 
     private Vector3 inputDirection;
+
+    private void Start()
+    {
+        SceneManager.activeSceneChanged += (Scene, Scene2) => { transform.position = new Vector3(0, 2, 0); };
+    }
 
     private void FixedUpdate()
     {

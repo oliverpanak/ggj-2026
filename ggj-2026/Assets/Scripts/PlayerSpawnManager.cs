@@ -7,12 +7,16 @@ public class PlayerSpawnManager : MonoBehaviour
     [SerializeField] private int maxPlayers = 4;
     [SerializeField] private Material[] playerColors = new Material[4];
     [SerializeField] private bool isManualSetup;
+    [SerializeField] private Transform spawnPosition;
 
     private List<GameObject> players = new List<GameObject>();
 
     public void OnPlayerJoined(PlayerInput playerInput)
     {
         GameObject newPlayer = playerInput.gameObject;
+        if(spawnPosition != null)
+            playerInput.transform.position = spawnPosition.position;
+        DontDestroyOnLoad(playerInput.gameObject);
 
         // Assign color
         int colorIndex = players.Count % playerColors.Length;

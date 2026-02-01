@@ -67,8 +67,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1534500882681460173}
   serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 1
+  m_Mass: 0.7
+  m_LinearDamping: 0.8
   m_AngularDamping: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -99,16 +99,16 @@ SpringJoint:
   m_Anchor: {x: 0, y: -0.6333333, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_Spring: 100000000
-  m_Damper: 0.1
+  m_Spring: 20
+  m_Damper: 0
   m_MinDistance: 0
   m_MaxDistance: 0
-  m_Tolerance: 0.25
+  m_Tolerance: 0.025
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 1
   m_EnablePreprocessing: 1
-  m_MassScale: 1
+  m_MassScale: 0.5
   m_ConnectedMassScale: 1
 --- !u!120 &4329096816386422711
 LineRenderer:
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PhysicsPlayerController
   rb: {fileID: 157568721544768123}
-  moveForce: 12
+  moveForce: 8
   lineRenderer: {fileID: 4329096816386422711}
   nextPlayer: {fileID: 0}
   animatorController: {fileID: 8078683394009400236}

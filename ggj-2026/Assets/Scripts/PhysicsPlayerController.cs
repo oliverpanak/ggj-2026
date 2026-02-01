@@ -9,6 +9,8 @@ public class PhysicsPlayerController : MonoBehaviour
     [SerializeField] private Transform nextPlayer;
 
     [SerializeField] private Animator animatorController;
+    [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private Transform visualTransform;
 
     public Transform NextPlayer
     {
@@ -26,6 +28,11 @@ public class PhysicsPlayerController : MonoBehaviour
         if (walking)
         {
             rb.AddForce(inputDirection * moveForce, ForceMode.Force);
+
+            // Rotate to face movement direction
+            Quaternion targetRotation = Quaternion.LookRotation(inputDirection);
+            Transform toRotate = visualTransform != null ? visualTransform : transform;
+            toRotate.rotation = Quaternion.Slerp(toRotate.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
         }
     }
 

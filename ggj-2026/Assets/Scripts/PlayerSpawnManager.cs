@@ -53,6 +53,9 @@ public class PlayerSpawnManager : MonoBehaviour
 
         players.Add(newPlayer);
 
+        // Register with PlayerManager so stamps can detect players
+        PlayerManager.Instance?.OnPlayerJoined(playerInput);
+
         Debug.Log($"Player {players.Count} joined and connected");
     }
 

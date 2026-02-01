@@ -182,6 +182,12 @@ public class Stamp : MonoBehaviour
             }
         }
 
+        // Trigger game over if a player was crushed
+        if (anyPlayerCrushed)
+        {
+            GameOverManager.Instance?.TriggerGameOver();
+        }
+
         // Re-enable collider (with delay if someone was crushed, immediately otherwise)
         if (stampColliderObject != null)
         {

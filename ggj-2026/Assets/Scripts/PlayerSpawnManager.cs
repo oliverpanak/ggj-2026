@@ -5,13 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerSpawnManager : MonoBehaviour
 {
     [SerializeField] private int maxPlayers = 4;
-    [SerializeField] private Color[] playerColors = new Color[]
-    {
-        Color.red,
-        Color.blue,
-        Color.green,
-        Color.yellow
-    };
+    [SerializeField] private Material[] playerColors = new Material[4];
 
     private List<GameObject> players = new List<GameObject>();
 
@@ -59,13 +53,12 @@ public class PlayerSpawnManager : MonoBehaviour
         Debug.Log($"Player {players.Count} joined and connected");
     }
 
-
-    private void AssignPlayerColor(GameObject player, Color color)
+    private void AssignPlayerColor(GameObject player, Material color)
     {
-        Renderer renderer = player.GetComponentInChildren<Renderer>();
+        Renderer renderer = player.transform.GetChild(0).transform.Find("Body").GetComponent<Renderer>();
         if (renderer != null)
         {
-            renderer.material.color = color;
+            renderer.material = color;
         }
     }
 }

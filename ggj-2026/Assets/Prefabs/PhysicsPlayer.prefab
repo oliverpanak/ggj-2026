@@ -96,20 +96,20 @@ SpringJoint:
   serializedVersion: 4
   m_ConnectedBody: {fileID: 0}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0.5, z: 0}
+  m_Anchor: {x: 0, y: -0.6333333, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_Spring: 7
-  m_Damper: 0
+  m_Spring: 100000000
+  m_Damper: 0.1
   m_MinDistance: 0
-  m_MaxDistance: 0.8
-  m_Tolerance: 0.05
+  m_MaxDistance: 0
+  m_Tolerance: 0.25
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 1
   m_EnablePreprocessing: 1
-  m_MassScale: 4
-  m_ConnectedMassScale: 4
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!120 &4329096816386422711
 LineRenderer:
   serializedVersion: 3
@@ -233,10 +233,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PhysicsPlayerController
   rb: {fileID: 157568721544768123}
-  moveForce: 15
+  moveForce: 12
   lineRenderer: {fileID: 4329096816386422711}
   nextPlayer: {fileID: 0}
   animatorController: {fileID: 8078683394009400236}
+  rotationSpeed: 10
+  visualTransform: {fileID: 4353969991933701420}
 --- !u!114 &2665776449349837667
 MonoBehaviour:
   m_ObjectHideFlags: 0

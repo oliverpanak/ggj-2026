@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1534500882681460173, guid: 1ee0827cbee8c49d5a885bd9be10551b, type: 3}
       propertyPath: m_Name
-      value: Player_Keyboard
+      value: Player_Keyboard_WASD
       objectReference: {fileID: 0}
     - target: {fileID: 2665776449349837667, guid: 1ee0827cbee8c49d5a885bd9be10551b, type: 3}
       propertyPath: m_Actions
@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: -944628639613478452, guid: 8298a2c36bc6743f8a6e75d4537cc86f, type: 3}
     - target: {fileID: 2665776449349837667, guid: 1ee0827cbee8c49d5a885bd9be10551b, type: 3}
       propertyPath: m_DefaultActionMap
-      value: Player1
+      value: b4f7cab7-0ad4-406f-9f62-f236c6c4d47b
       objectReference: {fileID: 0}
     - target: {fileID: 8051312440010603459, guid: 1ee0827cbee8c49d5a885bd9be10551b, type: 3}
       propertyPath: m_LocalPosition.x

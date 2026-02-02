@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,16 +12,18 @@ public class PlayerSpawnManager : MonoBehaviour
 
     [Header("Prefabs")]
     [SerializeField] private GameObject controllerPlayerPrefab;
-    [SerializeField] private GameObject keyboardPlayerPrefab;
 
-    [Header("Keyboard Action Maps")]
-    [SerializeField] private string[] keyboardActionMaps = { "WASD", "TFGH", "IJKL", "Arrows" };
+    [Header("Keyboard Player Prefabs (each with its own default action map)")]
+    [SerializeField] private GameObject keyboardPlayerWASD;
+    [SerializeField] private GameObject keyboardPlayerTFGH;
+    [SerializeField] private GameObject keyboardPlayerIJKL;
+    [SerializeField] private GameObject keyboardPlayerArrows;
 
     private List<GameObject> players = new List<GameObject>();
-    private HashSet<string> usedKeyboardMaps = new HashSet<string>();
+    private bool[] usedKeyboardSlots = new bool[4];
     private bool isSpawningKeyboardPlayer;
 
-    // Keys to detect for each keyboard action map
+    // Keys to detect for each keyboard player slot
     private readonly Key[][] keyboardBindings = {
         new[] { Key.W, Key.A, Key.S, Key.D },
         new[] { Key.T, Key.F, Key.G, Key.H },
@@ -36,16 +37,16 @@ public class PlayerSpawnManager : MonoBehaviour
         if (Keyboard.current == null) return;
 
         // Check for keyboard player joins
-        for (int i = 0; i < keyboardActionMaps.Length && i < keyboardBindings.Length; i++)
+        for (int i = 0; i < keyboardBindings.Length; i++)
         {
-            if (usedKeyboardMaps.Contains(keyboardActionMaps[i]))
+            if (usedKeyboardSlots[i])
                 continue;
 
             foreach (var key in keyboardBindings[i])
             {
                 if (Keyboard.current[key].wasPressedThisFrame)
                 {
-                    SpawnKeyboardPlayer(keyboardActionMaps[i]);
+                    SpawnKeyboardPlayer(i);
                     break;
                 }
             }
@@ -89,38 +90,31 @@ public class PlayerSpawnManager : MonoBehaviour
         SetupPlayer(playerInput.gameObject);
     }
 
-    private void SpawnKeyboardPlayer(string actionMapName)
+    private void SpawnKeyboardPlayer(int slotIndex)
     {
-        if (keyboardPlayerPrefab == null)
+        GameObject prefab = slotIndex switch
         {
-            Debug.LogError("PlayerSpawnManager: keyboardPlayerPrefab is not assigned!");
+            0 => keyboardPlayerWASD,
+            1 => keyboardPlayerTFGH,
+            2 => keyboardPlayerIJKL,
+            3 => keyboardPlayerArrows,
+            _ => null
+        };
+
+        if (prefab == null)
+        {
+            Debug.LogError($"PlayerSpawnManager: Keyboard player prefab for slot {slotIndex} is not assigned!");
             return;
         }
 
-        usedKeyboardMaps.Add(actionMapName);
+        usedKeyboardSlots[slotIndex] = true;
 
         Vector3 spawnPos = spawnPosition != null ? spawnPosition.position : Vector3.zero;
 
         // Set flag BEFORE Instantiate (OnPlayerJoined is called during Instantiate)
         isSpawningKeyboardPlayer = true;
-        GameObject newPlayer = Instantiate(keyboardPlayerPrefab, spawnPos, Quaternion.identity);
+        GameObject newPlayer = Instantiate(prefab, spawnPos, Quaternion.identity);
         isSpawningKeyboardPlayer = false;
-
-        // Start coroutine to finish setup after PlayerInput initializes
-        StartCoroutine(FinishKeyboardPlayerSetup(newPlayer, actionMapName));
-    }
-
-    private IEnumerator FinishKeyboardPlayerSetup(GameObject newPlayer, string actionMapName)
-    {
-        // Wait a frame for PlayerInput to fully initialize
-        yield return null;
-
-        // Switch to the correct action map
-        PlayerInput playerInput = newPlayer.GetComponent<PlayerInput>();
-        if (playerInput != null)
-        {
-            playerInput.SwitchCurrentActionMap(actionMapName);
-        }
 
         SetupPlayer(newPlayer);
     }

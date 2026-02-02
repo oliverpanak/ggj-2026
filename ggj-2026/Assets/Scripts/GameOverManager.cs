@@ -100,6 +100,7 @@ public class GameOverManager : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
+        PlayerSpawnManager.Instance?.DestroyAllPlayers();
         SceneManager.LoadScene("MainMenu");
     }
 

@@ -62,6 +62,28 @@ public class PlayerSpawnManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         FindSpawnPoint();
+        MovePlayersToSpawnPoint();
+    }
+
+    private void MovePlayersToSpawnPoint()
+    {
+        if (spawnPosition == null) return;
+
+        foreach (var player in players)
+        {
+            if (player != null)
+            {
+                player.transform.position = spawnPosition.position;
+
+                // Reset velocity so players don't keep momentum from previous scene
+                Rigidbody rb = player.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.linearVelocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                }
+            }
+        }
     }
 
     private void FindSpawnPoint()

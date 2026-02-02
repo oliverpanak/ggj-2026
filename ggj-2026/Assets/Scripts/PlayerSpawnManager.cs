@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
+    public static PlayerSpawnManager Instance { get; private set; }
+
     [Header("General")]
     [SerializeField] private int maxPlayers = 4;
     [SerializeField] private Material[] playerColors = new Material[4];
@@ -30,6 +32,33 @@ public class PlayerSpawnManager : MonoBehaviour
         new[] { Key.I, Key.J, Key.K, Key.L },
         new[] { Key.UpArrow, Key.LeftArrow, Key.DownArrow, Key.RightArrow }
     };
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
+    public void DestroyAllPlayers()
+    {
+        foreach (var player in players)
+        {
+            if (player != null)
+            {
+                Destroy(player);
+            }
+        }
+        players.Clear();
+
+        for (int i = 0; i < usedKeyboardSlots.Length; i++)
+        {
+            usedKeyboardSlots[i] = false;
+        }
+    }
 
     private void Update()
     {

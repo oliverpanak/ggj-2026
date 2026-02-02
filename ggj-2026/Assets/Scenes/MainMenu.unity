@@ -744,7 +744,7 @@ GameObject:
   - component: {fileID: 538353745}
   m_Layer: 0
   m_Name: PlayerSpawner
-  m_TagString: Untagged
+  m_TagString: SpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -757,12 +757,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 538353744}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.85, y: -2.719, z: -3.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1757317857}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &616867788 stripped
 GameObject:
@@ -2037,7 +2037,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: efc284b46455d4f78a6e7fc0844174c4, type: 2}
   - {fileID: 2100000, guid: 0baac81c15201ea49addb2445922fbec, type: 2}
   - {fileID: 2100000, guid: e5ebb3c0f30179445a18b3fb36d6f5d5, type: 2}
-  spawnPosition: {fileID: 538353745}
+  spawnPointTag: SpawnPoint
   springRestDistance: 0.5
   controllerPlayerPrefab: {fileID: 1534500882681460173, guid: 1ee0827cbee8c49d5a885bd9be10551b, type: 3}
   keyboardPlayerWASD: {fileID: 8950799004135289738, guid: 7debc8202c04a4148ba7197e87639738, type: 3}
@@ -2136,8 +2136,7 @@ Transform:
   m_LocalPosition: {x: -0, y: -0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 538353745}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2116692485
@@ -2229,4 +2228,5 @@ SceneRoots:
   - {fileID: 1113374655}
   - {fileID: 780937895}
   - {fileID: 1054581203}
+  - {fileID: 538353745}
   - {fileID: 1757317857}

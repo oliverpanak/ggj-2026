@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
@@ -9,8 +10,10 @@ public class PlayerSpawnManager : MonoBehaviour
     [Header("General")]
     [SerializeField] private int maxPlayers = 4;
     [SerializeField] private Material[] playerColors = new Material[4];
-    [SerializeField] private Transform spawnPosition;
+    [SerializeField] private string spawnPointTag = "SpawnPoint";
     [SerializeField] private float springRestDistance = 2f;
+
+    private Transform spawnPosition;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject controllerPlayerPrefab;
@@ -41,6 +44,30 @@ public class PlayerSpawnManager : MonoBehaviour
             return;
         }
         Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        FindSpawnPoint();
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        FindSpawnPoint();
+    }
+
+    private void FindSpawnPoint()
+    {
+        GameObject spawnObj = GameObject.FindWithTag(spawnPointTag);
+        spawnPosition = spawnObj != null ? spawnObj.transform : null;
     }
 
     public void DestroyAllPlayers()

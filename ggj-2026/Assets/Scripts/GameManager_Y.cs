@@ -41,6 +41,9 @@ public class GameManager_Y : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+		QualitySettings.vSyncCount = 1;
+		Application.targetFrameRate = 60;
+
         splineAnimator.Container = splineContainer;
         splineAnimator.MaxSpeed = cameraSpeed;
         StartCoroutine(DelayedStart());
